@@ -62,7 +62,7 @@ final class OperationRecvVideo extends BaseThread {
                 , new int[1], new int[1], mFrameInfo, FRAME_INFO_SIZE, new int[1], frameIndex);
         if (isRecvDataTimeOutCount()) {
             recvDataCount = 0;
-            return TuTkManager.ERR_CODE_RECV_TIME_OUT;
+            return AVAPIs.AV_ER_TIMEOUT;
         }
         Log.e(TAG, "avRecvFrameData2: recvDataCount " + recvDataCount + ",ret " + ret);
         if (ret > 0) {

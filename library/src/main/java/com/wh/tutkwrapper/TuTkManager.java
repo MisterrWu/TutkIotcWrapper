@@ -10,11 +10,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TuTkManager {
 
-    public static final int ERR_CODE_RECV_TIME_OUT = -2;
+    private static final int ERR_CODE_RECV_TIME_OUT = -2;
     public static final int ERR_CODE_RECV_DISCONNECT = -3;
 
     private static final String TAG = "TuTkManager";
-    public static final Object DEINIT_LOCK = new Object();
+    private static final Object DEINIT_LOCK = new Object();
 
     private static final TuTkManager INSTANCE = new TuTkManager();
     private static final int MAX_NUM = 12;
@@ -71,7 +71,7 @@ public class TuTkManager {
             }
             mRet = RDTAPIs.RDT_Initialize();
             Log.e(TAG, "Connection RDT_Initialize " + mRet);
-            if(mRet != RDTAPIs.RDT_ER_ALREADY_INITIALIZED && mRet != RDTAPIs.RDT_ER_NoERROR){
+            if(mRet != RDTAPIs.RDT_ER_ALREADY_INITIALIZED && mRet < 0){
                 return mRet;
             }
             initIOTC = INIT_OK;
@@ -89,10 +89,10 @@ public class TuTkManager {
             if (clientSize <= 0) {
                 int mRet = AVAPIs.lmAvDeInitialize();
                 Log.e(TAG, "Connection lmAvDeInitialize " + mRet);
-                mRet = IOTCAPIs.lmIOTC_DeInitialize();
-                Log.e(TAG, "Connection lmIOTC_DeInitialize " + mRet);
                 mRet = RDTAPIs.RDT_DeInitialize();
                 Log.e(TAG, "Connection RDT_DeInitialize " + mRet);
+                mRet = IOTCAPIs.lmIOTC_DeInitialize();
+                Log.e(TAG, "Connection lmIOTC_DeInitialize " + mRet);
                 initIOTC = -1;
             }
         }
